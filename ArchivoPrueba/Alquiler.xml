@@ -1,0 +1,70 @@
+<Schema name="Alquiler" description="OLAP modelo para la bodega sakila">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Tiempo">
+    <Hierarchy name="TiempoJerarquia" visible="true" hasAll="true">
+      <Table name="tiempos">
+      </Table>
+      <Level name="A&#241;o" visible="true" column="Anio" type="String" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+      </Level>
+      <Level name="Trimestre" visible="true" column="Semestre" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+      </Level>
+      <Level name="Mes" visible="true" column="Mes" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+      </Level>
+      <Level name="Quincena" visible="true" column="Quincena" type="String" uniqueMembers="false" levelType="TimeUndefined" hideMemberIf="Never">
+      </Level>
+      <Level name="Codigo" visible="true" column="idtiempo" type="String" uniqueMembers="true" levelType="TimeUndefined" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Sucursales">
+    <Hierarchy name="SucursalesJerarquia" visible="true" hasAll="true">
+      <Table name="sucursales">
+      </Table>
+      <Level name="Pais" visible="true" column="Pais" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Ciudad" visible="true" column="Ciudad" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Direccion" visible="true" column="Direccion" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Codigo" visible="true" column="Codigosucursal" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Clientes">
+    <Hierarchy name="ClienteJerarquia" visible="true" hasAll="true">
+      <Table name="clientes">
+      </Table>
+      <Level name="Pais" visible="true" column="Pais" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Ciudad" visible="true" column="Ciudad" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="nombres" visible="true" column="Identificacion" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="NombreCompleto">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Peliculas">
+    <Hierarchy name="PeliculasJerarquiaDuracion" visible="true" hasAll="true">
+      <Table name="peliculas">
+      </Table>
+      <Level name="Lenguaje" visible="true" column="Lenguaje" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Duracion" visible="true" column="Duracion" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Codigo" visible="true" column="Codigopelicula" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never" captionColumn="Titulo">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Cubo" visible="true" cache="true" enabled="true">
+    <Table name="alquilereshecho" alias="">
+    </Table>
+    <DimensionUsage source="Tiempo" name="Tiempo" visible="true" foreignKey="idtiempo">
+    </DimensionUsage>
+    <DimensionUsage source="Sucursales" name="Sucusales" visible="true" foreignKey="Codigosucursal">
+    </DimensionUsage>
+    <DimensionUsage source="Clientes" name="Cliente" visible="true" foreignKey="Identificacioncliente">
+    </DimensionUsage>
+    <DimensionUsage source="Peliculas" name="Peliculas" visible="true" foreignKey="Codigopelicula">
+    </DimensionUsage>
+    <Measure name="Importe" column="Importe" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>

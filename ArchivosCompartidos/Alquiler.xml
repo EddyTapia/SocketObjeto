@@ -1,0 +1,14 @@
+<Schema name="Alquiler" description="OLAP modelo para la bodega sakila">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Tiempo">
+    <Hierarchy name="TiempoJerarquia" visible="true" hasAll="true">
+      <Table name="tiempos">
+      </Table>
+      <Level name="A&#241;o" visible="true" column="Anio" type="String" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+      </Level>
+      <Level name="Trimestre" visible="true" column="Semestre" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+      </Level>
+      <Level name="Mes" visible="true" column="Mes" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+      </Level>
+      <Level name="Quincena" visible="true" column="Quincena" type="String" uniqueMembers="false" levelType="TimeUndefined" hideMemberIf="Never">
+      </Level>
+      <Level name="Codigo" visible="true" column="idtiempo" type="String" uniqueMembers="true" levelType="TimeUndef
